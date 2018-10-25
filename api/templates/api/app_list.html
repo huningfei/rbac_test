@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% load rbac %}
+
+{% block content %}
+    <div class="panel panel-success">
+        <div class="panel-heading">应用列表</div>
+        <div class="panel-body">
+
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>应用名字</th>
+                    {% if "app_edit"|permission:request or "app_del"|permission:request %}
+
+                        <th>操作</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in app_queryset %}
+                    <tr>
+                        <td>{{ row.id }}</td>
+                        <td>{{ row.title }}</td>
+                        {% if "app_edit"|permission:request or "app_del"|permission:request %}
+                            <td>
+                                {% if "app_edit"|permission:request %}
+                                    <a class="btn btn-info" href="{% url 'app_edit' row.id %}">编辑</a>
+                                {% endif %}
+                                {% if "app_del"|permission:request %}
+                                    <a class="btn btn-warning" href="{% url 'app_del' row.id %}">删除</a>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if 'app_add'|permission:request %}
+                <a class="btn btn-primary" href="{% url 'app_add' %}">添加</a>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

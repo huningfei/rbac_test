@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+     <div class="panel panel-success">
+
+        <div class="panel-heading">应用编辑</div>
+        <div class="panel-body">
+           <form method="post" novalidate>
+            {% csrf_token %}
+            <p>应用名：
+                {{ form.title }}{{ form.title.errors.0 }}
+                <span style="font-size: 14px;color:red; margin-left: 67px">{{ data }}</span>
+
+            </p>
+            <input type="submit" value="提交" class="btn btn-info">
+                <a href="{% url 'app_list' %}" class="btn btn-warning" style="margin-left: 120px">取消</a>
+        </form>
+
+        </div>
+     </div>
+
+{% endblock %}
